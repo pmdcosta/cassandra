@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: cassandra-dev
+  labels:
+    app: cassandra
+    env: development
+spec:
+  ports:
+    - port: 9042
+      name: cql
+  selector:
+    app: cassandra
+    env: development
