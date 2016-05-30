@@ -136,7 +136,7 @@ commit_failure_policy: die
 # NOTE: if you reduce the size, you may not get you hottest keys loaded on startup.
 #
 # Default value is empty to make it "auto" (min(5% of Heap (in MB), 100MB)). Set to 0 to disable key cache.
-key_cache_size_in_mb:
+key_cache_size_in_mb: 0
 
 # Duration in seconds after which Cassandra should
 # save the key cache. Caches are saved to saved_caches_directory as
@@ -271,8 +271,8 @@ seed_provider:
 # On the other hand, since writes are almost never IO bound, the ideal
 # number of "concurrent_writes" is dependent on the number of cores in
 # your system; (8 * number_of_cores) is a good rule of thumb.
-concurrent_reads: 16
-concurrent_writes: 8
+concurrent_reads: 4
+concurrent_writes: 4
 concurrent_counter_writes: 16
 
 # Total memory to use for sstable-reading buffers.  Defaults to
@@ -438,7 +438,7 @@ rpc_keepalive: true
 #
 # Alternatively,  can provide your own RPC server by providing the fully-qualified class name
 # of an o.a.c.t.TServerFactory that can create an instance of it.
-rpc_server_type: sync
+rpc_server_type: hsha
 
 # Uncomment rpc_min|max_thread to set request pool size limits.
 #
@@ -450,8 +450,8 @@ rpc_server_type: sync
 # encouraged to set a maximum that makes sense for you in production, but do keep in mind that
 # rpc_max_threads represents the maximum number of client requests this server may execute concurrently.
 #
-# rpc_min_threads: 16
-# rpc_max_threads: 2048
+rpc_min_threads: 8
+rpc_max_threads: 16
 
 # uncomment to set socket buffer sizes on rpc connections
 # rpc_send_buff_size_in_bytes:
@@ -532,7 +532,7 @@ batch_size_warn_threshold_in_kb: 5
 # 
 # If your data directories are backed by SSD, you should increase this
 # to the number of cores.
-#concurrent_compactors: 1
+concurrent_compactors: 1
 
 # Throttles compaction to the given total throughput across the entire
 # system. The faster you insert data, the faster you need to compact in
@@ -540,7 +540,7 @@ batch_size_warn_threshold_in_kb: 5
 # 16 to 32 times the rate you are inserting data is more than sufficient.
 # Setting this to 0 disables throttling. Note that this account for all types
 # of compaction, including validation compaction.
-compaction_throughput_mb_per_sec: 16
+compaction_throughput_mb_per_sec: 0
 
 # When compacting, the replacement sstable(s) can be opened before they
 # are completely written, and used in place of the prior sstables for
